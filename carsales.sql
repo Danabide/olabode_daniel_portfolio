@@ -5,10 +5,10 @@ SELECT DISTINCT salesperson
 FROM carsales;
 
 SELECT DISTINCT customer_name
-FROM carsales
+FROM carsales;
 
 SELECT *, EXTRACT (YEAR FROM date) AS sales_year
-FROM carsales
+FROM carsales;
 
 --DETERMINING THE HIGHEST SELLING SALESPERSON 
 SELECT salesperson, COUNT(*) AS Number_of_sales
@@ -40,7 +40,7 @@ ORDER BY COUNT(*) DESC;
 SELECT car_make, model, COUNT(model) AS modelcount
 FROM carsales 
 GROUP BY car_make, model
-ORDER BY COUNT(model) DESC
+ORDER BY COUNT(model) DESC;
 
 --DETERMINING THE PREVALENT YEAR OF CARS SOLD
 SELECT car_year, COUNT(*) AS frequency_of_product_year
@@ -53,19 +53,19 @@ ALTER TABLE carsales
 ADD COLUMN sale_year INTEGER;
 
 UPDATE carsales
-SET sale_year = EXTRACT(YEAR FROM date)
+SET sale_year = EXTRACT(YEAR FROM date);
 
 ALTER TABLE carsales
 ADD COLUMN product_year_to_sale INTEGER;
 
 UPDATE carsales
-SET product_year_to_sale = sale_year - car_year
+SET product_year_to_sale = sale_year - car_year;
 
 --DETERMINING THE CAR MAKE WITH THE HIGHEST SALES PRICE
 SELECT car_make, SUM(sales_price) AS total_sp
 FROM carsales
 GROUP BY car_make
-ORDER BY total_sp DESC
+ORDER BY total_sp DESC;
 
 --DETERMINING THE AVERAGE SELLING PRICE OF EACH CAR MODEL BY THEIR CAR MAKE
 WITH avg_prices AS 
@@ -84,13 +84,13 @@ ORDER BY model, row_num;
 SELECT sale_year, COUNT(*) AS no_of_sales
 FROM carsales
 GROUP BY sale_year
-ORDER BY no_of_sales DESC
+ORDER BY no_of_sales DESC;
 
 --DETERMINING THE YEAR WITH THE HIGHEST AVERAGE SALES PRICE
 SELECT sale_year, AVG(sales_price) AS avg_salesprice
 FROM carsales
 GROUP BY sale_year
-ORDER BY avg_salesprice DESC
+ORDER BY avg_salesprice DESC;
 
 --DETERMINING HOW THE DURATION BETWEEN PRODUCTION AFFECTS PRICE
 SELECT product_year_to_sale, AVG(sales_price) AS avg_sp
@@ -109,7 +109,7 @@ LIMIT 10;
 SELECT car_make, ROUND(AVG(commission_earned::NUMERIC), 2) AS avg_ce
 FROM carsales
 GROUP BY car_make
-ORDER BY avg_ce DESC
+ORDER BY avg_ce DESC;
 
 
 --DETERMINING THE AVERAGE COMMISSION BY EACH MODEL OF EACH CAR MAKE
@@ -158,11 +158,10 @@ ORDER BY COUNT(*) DESC;
 
 
 ALTER TABLE carsales
-ADD COLUMN sale_monthname VARCHAR(20)
+ADD COLUMN sale_monthname VARCHAR(20);
 
 UPDATE carsales
-SET sale_monthname = TO_CHAR(date, 'Month')
-
+SET sale_monthname = TO_CHAR(date, 'Month');
 --DETECTING WHICH MONTH HAD THE HIGHEST SALES
 SELECT sale_year, sale_monthname, COUNT(*) AS no_of_sales
 FROM carsales
@@ -191,7 +190,7 @@ ALTER TABLE carsales
 ADD COLUMN net_amount_earned NUMERIC;
 
 UPDATE carsales
-SET net_amount_earned = sales_price - commission_earned
+SET net_amount_earned = sales_price - commission_earned;
 
 --DETERMINING SELLERS WHO HAD THE HIGHEST NET AMOUNT EARNED
 SELECT salesperson, SUM(net_amount_earned)
